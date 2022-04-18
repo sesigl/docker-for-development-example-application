@@ -3,6 +3,18 @@
 - Example application from blog post: https://www.freecodecamp.org/news/author/sesigl/
 - Demo Application copied and modified from: https://github.com/spring-guides/gs-accessing-data-rest.git
 
+## Requirements
+
+### Install Java:
+
+Follow the described Guide https://www.oracle.com/java/technologies/downloads/ or just use some package manager of your choice like brew:
+
+`brew install java`
+
+### Install Docker
+
+https://docs.docker.com/get-docker/
+
 ## Useful Commands
 
 ### Run Integration Tests Using a Dockerized MySQL Database
