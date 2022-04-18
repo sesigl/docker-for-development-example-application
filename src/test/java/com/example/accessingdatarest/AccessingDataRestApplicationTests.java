@@ -41,8 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AccessingDataRestApplicationTests {
 
 	@Container
-    private static MySQLContainer database = new MySQLContainer<>("mysql:5.7.34");
-	
+	private static MySQLContainer database = new MySQLContainer<>("mysql:5.7.34");
+
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -50,11 +50,11 @@ public class AccessingDataRestApplicationTests {
 	private PersonRepository personRepository;
 
 	@DynamicPropertySource
-    static void databaseProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", database::getJdbcUrl);
-        registry.add("spring.datasource.username", database::getUsername);
-        registry.add("spring.datasource.password", database::getPassword);
-    }
+	static void databaseProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", database::getJdbcUrl);
+		registry.add("spring.datasource.username", database::getUsername);
+		registry.add("spring.datasource.password", database::getPassword);
+	}
 
 	@BeforeEach
 	public void deleteAllBeforeTests() throws Exception {
@@ -73,8 +73,9 @@ public class AccessingDataRestApplicationTests {
 
 		mockMvc.perform(post("/people").content(
 				"{\"firstName\": \"Frodo\", \"lastName\":\"Baggins\"}")).andExpect(
-						status().isCreated()).andExpect(
-								header().string("Location", containsString("people/")));
+						status().isCreated())
+				.andExpect(
+						header().string("Location", containsString("people/")));
 	}
 
 	@Test
@@ -82,7 +83,8 @@ public class AccessingDataRestApplicationTests {
 
 		MvcResult mvcResult = mockMvc.perform(post("/people").content(
 				"{\"firstName\": \"Frodo\", \"lastName\":\"Baggins\"}")).andExpect(
-						status().isCreated()).andReturn();
+						status().isCreated())
+				.andReturn();
 
 		String location = mvcResult.getResponse().getHeader("Location");
 		mockMvc.perform(get(location)).andExpect(status().isOk()).andExpect(
@@ -99,9 +101,10 @@ public class AccessingDataRestApplicationTests {
 
 		mockMvc.perform(
 				get("/people/search/findByLastName?name={name}", "Baggins")).andExpect(
-						status().isOk()).andExpect(
-								jsonPath("$._embedded.people[0].firstName").value(
-										"Frodo"));
+						status().isOk())
+				.andExpect(
+						jsonPath("$._embedded.people[0].firstName").value(
+								"Frodo"));
 	}
 
 	@Test
@@ -109,7 +112,8 @@ public class AccessingDataRestApplicationTests {
 
 		MvcResult mvcResult = mockMvc.perform(post("/people").content(
 				"{\"firstName\": \"Frodo\", \"lastName\":\"Baggins\"}")).andExpect(
-						status().isCreated()).andReturn();
+						status().isCreated())
+				.andReturn();
 
 		String location = mvcResult.getResponse().getHeader("Location");
 
@@ -127,7 +131,8 @@ public class AccessingDataRestApplicationTests {
 
 		MvcResult mvcResult = mockMvc.perform(post("/people").content(
 				"{\"firstName\": \"Frodo\", \"lastName\":\"Baggins\"}")).andExpect(
-						status().isCreated()).andReturn();
+						status().isCreated())
+				.andReturn();
 
 		String location = mvcResult.getResponse().getHeader("Location");
 
@@ -145,7 +150,8 @@ public class AccessingDataRestApplicationTests {
 
 		MvcResult mvcResult = mockMvc.perform(post("/people").content(
 				"{ \"firstName\": \"Bilbo\", \"lastName\":\"Baggins\"}")).andExpect(
-						status().isCreated()).andReturn();
+						status().isCreated())
+				.andReturn();
 
 		String location = mvcResult.getResponse().getHeader("Location");
 		mockMvc.perform(delete(location)).andExpect(status().isNoContent());
